@@ -3,7 +3,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../domain/entities/bead_entity.dart';
 
-/// A single bead widget that animates when tapped
 class BeadWidget extends StatelessWidget {
   final BeadEntity bead;
   final VoidCallback onTap;

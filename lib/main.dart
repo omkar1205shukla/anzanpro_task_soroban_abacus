@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'presentation/pages/soroban_page.dart';
 
-/// Entry point of the Soroban App
 void main() {
   runApp(const SorobanApp());
 }
 
-/// Root widget of the application
 class SorobanApp extends StatelessWidget {
   const SorobanApp({super.key});
 

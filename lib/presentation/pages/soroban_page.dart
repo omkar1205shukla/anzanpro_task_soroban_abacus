@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import '../controllers/soroban_controller.dart';
 import '../widgets/bead_widget.dart';
 
-/// Main Soroban UI page with value display and responsive layout
 class SorobanPage extends StatelessWidget {
   final SorobanController controller = Get.put(SorobanController());
 
