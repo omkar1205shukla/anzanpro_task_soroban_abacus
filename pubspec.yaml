@@ -1,0 +1,43 @@
+name: anzanpro_task
+description: "A new Flutter project."
+
+publish_to: 'none' 
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.4
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+
+  cupertino_icons: ^1.0.8
+  get: ^4.7.2
+  flutter_animate: ^4.5.2
+  google_fonts: ^6.3.0
+  lottie: ^3.2.0
+  flutter_hooks: ^0.21.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner:
+  freezed: ^2.4.6
+
+
+  flutter_lints: ^4.0.0
+
+
+
+
+flutter:
+
+
+  uses-material-design: true
+
+  
