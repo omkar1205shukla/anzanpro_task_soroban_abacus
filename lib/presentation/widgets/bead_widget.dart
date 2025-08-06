@@ -1,44 +1,3 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter_animate/flutter_animate.dart';
-
-// import '../../domain/entities/bead_entity.dart';
-
-// class BeadWidget extends StatelessWidget {
-//   final BeadEntity bead;
-//   final VoidCallback onTap;
-
-//   const BeadWidget({super.key, required this.bead, required this.onTap});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return GestureDetector(
-//       onTap: onTap,
-//       child: AnimatedContainer(
-//         duration: 300.ms,
-//         width: 30,
-//         height: 30,
-//         margin: const EdgeInsets.all(4),
-//         decoration: BoxDecoration(
-//           shape: BoxShape.circle,
-//           color: bead.isActive
-//               ? Colors.orangeAccent
-//               : bead.isUpper
-//                   ? Colors.blueGrey
-//                   : Colors.grey.shade300,
-//           boxShadow: [
-//             if (bead.isActive)
-//               const BoxShadow(
-//                 color: Colors.black26,
-//                 blurRadius: 10,
-//                 offset: Offset(2, 4),
-//               )
-//           ],
-//         ),
-//       ).animate().scale(),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -48,11 +7,13 @@ import '../../domain/entities/bead_entity.dart';
 class BeadWidget extends StatelessWidget {
   final BeadEntity bead;
   final VoidCallback onTap;
+  final double size;
 
   const BeadWidget({
-    super.key,
     required this.bead,
     required this.onTap,
+    required this.size,
+    super.key,
   });
 
   @override

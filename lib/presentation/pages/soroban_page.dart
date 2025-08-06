@@ -1,134 +1,3 @@
-// import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
-
-// import '../controllers/soroban_controller.dart';
-// import '../widgets/bead_widget.dart';
-
-// class SorobanPage extends StatelessWidget {
-//   final SorobanController controller = Get.put(SorobanController());
-
-//   SorobanPage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.brown.shade100,
-//       appBar: AppBar(
-//         title: const Text("Soroban Abacus"),
-//         centerTitle: true,
-//         backgroundColor: Colors.brown,
-//       ),
-//       body: Obx(() => Padding(
-//             padding: const EdgeInsets.all(16.0),
-//             child: Column(
-//               children: [
-//                 const Text("Tap on beads to toggle"),
-//                 const SizedBox(height: 20),
-//                 Expanded(
-//                   child: SingleChildScrollView(
-//                     scrollDirection: Axis.horizontal,
-//                     child: Row(
-//                       children: List.generate(controller.columns, (col) {
-//                         final colBeads = controller.beads
-//                             .where((b) => b.column == col)
-//                             .toList();
-
-//                         return Column(
-//                           mainAxisAlignment: MainAxisAlignment.center,
-//                           children: colBeads.map((bead) {
-//                             return BeadWidget(
-//                               bead: bead,
-//                               onTap: () => controller.toggleBead(bead),
-//                             );
-//                           }).toList(),
-//                         );
-//                       }),
-//                     ),
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           )),
-//     );
-//   }
-// }
-
-// import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
-
-// import '../controllers/soroban_controller.dart';
-// import '../widgets/bead_widget.dart';
-
-// /// Main Soroban page that shows all beads and total value
-// class SorobanPage extends StatelessWidget {
-//   /// Inject controller using GetX
-//   final SorobanController controller = Get.put(SorobanController());
-
-//   SorobanPage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.brown.shade100,
-//       appBar: AppBar(
-//         backgroundColor: Colors.brown.shade400,
-//         centerTitle: true,
-//         title: const Text("Japanese Soroban",
-//             style: TextStyle(color: Colors.white)),
-//         actions: [
-//           IconButton(
-//             tooltip: "Reset Soroban",
-//             icon: const Icon(Icons.refresh, color: Colors.white),
-//             onPressed: () => controller.resetBeads(),
-//           ),
-//         ],
-//       ),
-//       body: Obx(() => Padding(
-//             padding: const EdgeInsets.all(16.0),
-//             child: Column(
-//               children: [
-//                 // Display total Soroban value
-//                 Text(
-//                   "Total Value: ${controller.calculateSorobanValue()}",
-//                   style: const TextStyle(
-//                       fontSize: 24, fontWeight: FontWeight.bold),
-//                 ),
-//                 const SizedBox(height: 20),
-
-//                 // Scrollable Soroban columns
-//                 Expanded(
-//                   child: SingleChildScrollView(
-//                     scrollDirection: Axis.horizontal,
-//                     child: Row(
-//                       crossAxisAlignment: CrossAxisAlignment.center,
-//                       children: List.generate(controller.columns, (col) {
-//                         // Get all beads in this column
-//                         final columnBeads = controller.beads
-//                             .where((b) => b.column == col)
-//                             .toList()
-//                           ..sort((a, b) => a.row
-//                               .compareTo(b.row)); // ensure top-to-bottom order
-
-//                         return Column(
-//                           mainAxisAlignment: MainAxisAlignment.center,
-//                           children: columnBeads.map((bead) {
-//                             return BeadWidget(
-//                               bead: bead,
-//                               onTap: () => controller.toggleBead(bead),
-//                             );
-//                           }).toList(),
-//                         );
-//                       }),
-//                     ),
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           )),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -143,24 +12,37 @@ class SorobanPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final media = MediaQuery.of(context);
+    final screenWidth = media.size.width;
+    final screenHeight = media.size.height;
+
+    final bool isTablet = screenWidth > 600;
+    final double beadSize = isTablet ? 48 : 36;
+    final double fontSize = isTablet ? 24 : 18;
+    final double titleSize = isTablet ? 28 : 22;
+    final double padding = isTablet ? 24 : 16;
     return Scaffold(
       backgroundColor: Colors.brown.shade50,
       appBar: AppBar(
         backgroundColor: Colors.brown.shade400,
         centerTitle: true,
-        title: const Text(
+        title: Text(
           "Japanese Soroban",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: titleSize,
+          ),
         ),
         actions: [
           IconButton(
             tooltip: "Undo",
-            icon: const Icon(Icons.undo, color: Colors.white),
+            icon: Icon(Icons.undo, color: Colors.white, size: fontSize),
             onPressed: () => controller.undoLast(),
           ),
           IconButton(
             tooltip: "Reset",
-            icon: const Icon(Icons.refresh, color: Colors.white),
+            icon: Icon(Icons.refresh, color: Colors.white, size: fontSize),
             onPressed: () => controller.resetBeads(),
           ),
         ],
@@ -172,7 +54,7 @@ class SorobanPage extends StatelessWidget {
           final isWide = constraints.maxWidth > 600;
 
           return Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(padding),
             child: Column(
               children: [
                 // Value display card
@@ -182,8 +64,10 @@ class SorobanPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12)),
                   color: Colors.orange.shade50,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 12, horizontal: 24),
+                    padding: EdgeInsets.symmetric(
+                      vertical: padding / 2,
+                      horizontal: padding,
+                    ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -193,7 +77,7 @@ class SorobanPage extends StatelessWidget {
                         Text(
                           "Total: $value",
                           style: TextStyle(
-                            fontSize: isWide ? 28 : 22,
+                            fontSize: fontSize + 4,
                             fontWeight: FontWeight.bold,
                             color: Colors.brown.shade800,
                           ),
@@ -217,14 +101,19 @@ class SorobanPage extends StatelessWidget {
                               .toList()
                             ..sort((a, b) => a.row.compareTo(b.row));
 
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: columnBeads.map((bead) {
-                              return BeadWidget(
-                                bead: bead,
-                                onTap: () => controller.toggleBead(bead),
-                              );
-                            }).toList(),
+                          return Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: isTablet ? 10 : 6),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: columnBeads.map((bead) {
+                                return BeadWidget(
+                                  bead: bead,
+                                  onTap: () => controller.toggleBead(bead),
+                                  size: beadSize,
+                                );
+                              }).toList(),
+                            ),
                           );
                         }),
                       ),
